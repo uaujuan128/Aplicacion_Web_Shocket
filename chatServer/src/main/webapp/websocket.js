@@ -95,17 +95,18 @@ function sayHello() {
 
     var passphrase = "temp";
      
-    var texto = aesUtil.encrypt(salt, iv,passphrase, myField.value);
+var texto = myField.value;
     
-    writeToScreen("SENT (text): " + aesUtil.decrypt(salt, iv,passphrase, texto));
+    writeToScreen("SENT (text): " +  texto);
 
     var object = {
         "destino": destino.value,
         "tipo": "texto",
         "contenido": texto,
-        "key": passphrase,
-        "salt" : salt,
-        "iv": iv
+        "fecha": new Date()
+//        "key": passphrase,
+//        "salt" : salt,
+//        "iv": iv
     };
 
 
@@ -147,7 +148,7 @@ function onMessage(evt) {
     if (typeof evt.data == "string") {
         var mensaje = JSON.parse(evt.data);
        
-        var texto = aesUtil.decrypt(mensaje.salt,mensaje.iv,mensaje.key, mensaje.contenido);
+        var texto =  mensaje.contenido;
         switch (mensaje.tipo)
         {
             case "texto": 

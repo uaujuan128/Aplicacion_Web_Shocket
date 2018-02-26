@@ -12,8 +12,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import dao.base_datosDAO;
 import java.io.IOException;
+import static java.lang.Long.parseLong;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -130,8 +134,11 @@ public class ChatEndPoint {
                 switch (mensaje.getTipo()) {
                     case "texto":
                         //descifrar contenido del mensaje.
-
-                        mensaje.setContenido(aes.encrypt(mensaje.getSalt(), mensaje.getIv(), mensaje.getKey(), "mensaje del servidor"));
+//                        String miliseg =  "1519646709459";
+//                        Instant timestamp =  Instant.ofEpochMilli(parseLong(miliseg));
+//                        ZoneId zone = null;
+//                        LocalDateTime ldt = LocalDateTime.ofInstant(timestamp, zone.systemDefault());
+//                        System.out.println(ldt.getYear()+"-"+ldt.getMonth().getValue()+"-"+ldt.getDayOfMonth()+" "+ldt.getHour()+":"+ldt.getMinute()+":"+ldt.getSecond());
 
                         for (Session s : sessionQueManda.getOpenSessions()) {
                             try {
