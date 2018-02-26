@@ -10,6 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Apertura de cuentas</title>
+        <link rel="stylesheet" type="text/css" href="css/style.css" media="screen" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script>
             function apertura_cuenta()
