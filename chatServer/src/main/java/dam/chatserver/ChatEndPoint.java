@@ -5,6 +5,7 @@
  */
 package dam.chatserver;
 
+import com.datoshttp.Mensaje;
 import com.datoshttp.MetaMensajeWS;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -36,6 +37,7 @@ import model.Registro;
 import model.UserWS;
 import servicios.base_de_datosServicios;
 import util.AesUtil;
+import model.Mensaje_mio;
 
 /**
  *
@@ -102,7 +104,7 @@ public class ChatEndPoint {
     }
 
     @OnMessage
-    public void echoText(MensajeCifrado mensaje, Session sessionQueManda) {
+    public void echoText(Mensaje_mio mensaje, Session sessionQueManda) {
         if (!sessionQueManda.getUserProperties().get("login").equals("OK")) {
             try {
                 // comprobar login
@@ -134,17 +136,25 @@ public class ChatEndPoint {
                 switch (mensaje.getTipo()) {
                     case "texto":
                         //descifrar contenido del mensaje.
-//                        String miliseg =  "1519646709459";
-//                        Instant timestamp =  Instant.ofEpochMilli(parseLong(miliseg));
-//                        ZoneId zone = null;
-//                        LocalDateTime ldt = LocalDateTime.ofInstant(timestamp, zone.systemDefault());
-//                        System.out.println(ldt.getYear()+"-"+ldt.getMonth().getValue()+"-"+ldt.getDayOfMonth()+" "+ldt.getHour()+":"+ldt.getMinute()+":"+ldt.getSecond());
-
+                        String miliseg =  mensaje.getFecha();
+                        Instant timestamp =  Instant.ofEpochMilli(parseLong(miliseg));
+                        ZoneId zone = null;
+                        LocalDateTime ldt = LocalDateTime.ofInstant(timestamp, zone.systemDefault());
+                        mensaje.setFecha(ldt.getYear()+"-"+ldt.getMonth().getValue()+"-"+ldt.getDayOfMonth()+" "+ldt.getHour()+":"+ldt.getMinute()+":"+ldt.getSecond());
+                        
+                        mensaje.setUsuario((String) sessionQueManda.getUserProperties().get("user"));
+                        
+                        if(mensaje.isSe_guarda())
+                        {
+                            base_de_datosServicios a = new base_de_datosServicios();
+                            a.guardar_mensaje(mensaje);
+                        }
                         for (Session s : sessionQueManda.getOpenSessions()) {
                             try {
                                 String user = (String) sessionQueManda.getUserProperties().get("user");
-                                mensaje.setUser(user);
+//                                mensaje.setUser(user);
                                 //if (!s.equals(sessionQueManda)) {
+                                
                                 s.getBasicRemote().sendObject(mensaje);
                                 //}
                             } catch (IOException ex) {
@@ -158,7 +168,7 @@ public class ChatEndPoint {
                         canales.add("canal2");
                         canales.add("to lo bueno");
                         ObjectMapper mapper = new ObjectMapper();
-                        mensaje.setContenido(aes.encrypt(mensaje.getSalt(), mensaje.getIv(), mensaje.getKey(), mapper.writeValueAsString(canales)));
+//                        mensaje.setContenido(aes.encrypt(mensaje.getSalt(), mensaje.getIv(), mensaje.getKey(), mapper.writeValueAsString(canales)));
                         sessionQueManda.getBasicRemote().sendObject(mensaje);
                         break;
                 }

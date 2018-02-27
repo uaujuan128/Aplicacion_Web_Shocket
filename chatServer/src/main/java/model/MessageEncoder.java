@@ -13,12 +13,12 @@ import javax.websocket.EncodeException;
 import javax.websocket.Encoder;
 import javax.websocket.EndpointConfig;
 
-public class MessageEncoder implements Encoder.Text<MensajeCifrado> {
+public class MessageEncoder implements Encoder.Text<Mensaje_mio> {
  
     private static final ObjectMapper gson = new ObjectMapper();
  
     @Override
-    public String encode(MensajeCifrado message) throws EncodeException {
+    public String encode(Mensaje_mio message) throws EncodeException {
         String json = "";
         try {
             json = gson.writeValueAsString(message);

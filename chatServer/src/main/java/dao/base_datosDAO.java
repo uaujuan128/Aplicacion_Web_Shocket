@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Mensaje_mio;
 import model.Registro;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
@@ -83,6 +84,30 @@ public class base_datosDAO
 
             stmt.setString(1, user);
             stmt.setString(2, hash);
+
+            filas = stmt.executeUpdate();
+
+
+        } catch (Exception ex) {
+            Logger.getLogger(base_datosDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            db.cerrarConexion(con);
+        }
+
+        return filas;
+    }
+    public int guardar_mensaje(Mensaje_mio mensaje) {
+        Connection con = null;
+        DBConnection db = new DBConnection();
+        int filas = 0;
+        try {
+            con = db.getConnection();
+            PreparedStatement stmt = con.prepareStatement("insert into mensajes (mensaje, fecha, id_canal, nombre_user) values (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+
+            stmt.setString(1, mensaje.getContenido());
+            stmt.setString(2, mensaje.getFecha());
+            stmt.setString(3, mensaje.getDestino());
+            stmt.setString(4, mensaje.getUsuario());
 
             filas = stmt.executeUpdate();
 

@@ -68,9 +68,9 @@
                 <input id="pass" type="text"><br>
                 <input onclick="conectar();" value="conectar" type="button"> 
                 <h2>Text Data</h2>
-                <input onclick="sayHello();" value="Say Hello" type="button"> 
-                <input id="destino" value="Juan" type="text">
-                <input id="myField" value="WebSocket" type="text"><br>
+                <input onclick="sayHello();" value="Mensaje" type="button">
+                <input id="myField" value="WebSocket" type="text">
+                <input type="checkbox" id="se_guarda"> Marcar para guardar el mensaje.<br>
                 <input onclick="getCanales();" value="getCanales" type="button"> 
                 <select id="canales">
                     

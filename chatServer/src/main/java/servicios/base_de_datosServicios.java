@@ -9,6 +9,7 @@ import dao.base_datosDAO;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import util.PasswordHash;
+import model.Mensaje_mio;
 
 /**
  *
@@ -34,5 +35,11 @@ public class base_de_datosServicios
         base_datosDAO a = new base_datosDAO();
         String hash = PasswordHash.createHash(pass);
         return a.crear_nuevo_registro(user, hash);
+    }
+    
+    public int guardar_mensaje (Mensaje_mio mensaje)
+    {
+        base_datosDAO a = new base_datosDAO();
+        return a.guardar_mensaje(mensaje);
     }
 }

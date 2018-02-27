@@ -100,10 +100,12 @@ var texto = myField.value;
     writeToScreen("SENT (text): " +  texto);
 
     var object = {
-        "destino": destino.value,
         "tipo": "texto",
         "contenido": texto,
-        "fecha": new Date()
+        "destino": null,
+        "fecha": new Date().getTime(),
+        "usuario": null,
+        "se_guarda": se_guarda.checked
 //        "key": passphrase,
 //        "salt" : salt,
 //        "iv": iv
@@ -152,7 +154,7 @@ function onMessage(evt) {
         switch (mensaje.tipo)
         {
             case "texto": 
-                writeToScreen("RECEIVED (text): " + texto);
+                writeToScreen(mensaje.fecha+" - "+mensaje.contenido);
                 break;
             case "canales": 
                 var canales = JSON.parse(texto);

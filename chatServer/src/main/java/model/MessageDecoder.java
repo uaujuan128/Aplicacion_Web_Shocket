@@ -15,17 +15,17 @@ import javax.websocket.DecodeException;
 import javax.websocket.Decoder;
 import javax.websocket.EndpointConfig;
 
-public class MessageDecoder implements Decoder.Text<MensajeCifrado> {
+public class MessageDecoder implements Decoder.Text<Mensaje_mio> {
  
     private static final ObjectMapper gson = new ObjectMapper();
  
     @Override
-    public MensajeCifrado decode(String mensaje) throws DecodeException {
-        MensajeCifrado meta  = null;
+    public Mensaje_mio decode(String mensaje) throws DecodeException {
+        Mensaje_mio meta  = null;
         try {
             gson.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
              meta = gson.readValue(mensaje,
-              new TypeReference<MensajeCifrado>() {
+              new TypeReference<Mensaje_mio>() {
               });
         } catch (IOException ex) {
             Logger.getLogger(MessageDecoder.class.getName()).log(Level.SEVERE, null, ex);
